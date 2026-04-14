@@ -1,0 +1,98 @@
+// Version: 1.0.0
+type ApplicationId__52996827 = ApplicationId__702901380;
+type ApplicationId__702901380 = Nat;
+type ApplicationStatus__289152660 = ApplicationStatus__511886962;
+type ApplicationStatus__511886962 = {#Accepted; #Pending; #Rejected; #Viewed};
+type Application__678882009 =
+  {
+    applicantId : UserId__786370870;
+    appliedAt : Timestamp__1056154367;
+    var coverLetter : Text;
+    id : ApplicationId__52996827;
+    jobId : JobId__493223341;
+    var status : ApplicationStatus__289152660
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type EmployerProfile__716138234 =
+  {
+    var companyName : Text;
+    createdAt : Timestamp__432409533;
+    var description : Text;
+    id : UserId__423380635;
+    var websiteUrl : Text
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type JobId__339598917 = Nat;
+type JobId__493223341 = JobId__339598917;
+type JobId__567733654 = JobId__339598917;
+type JobSeekerProfile__356638552 =
+  {
+    var bio : Text;
+    createdAt : Timestamp__432409533;
+    var email : Text;
+    id : UserId__423380635;
+    var name : Text;
+    var phone : Text;
+    var skills : Text;
+    var yearsOfExperience : Nat
+  };
+type JobStatus__357834694 = {#Closed; #Open};
+type JobStatus__374926235 = JobStatus__357834694;
+type JobType__229172236 = JobType__901735504;
+type JobType__901735504 = {#FullTime; #PartTime; #Remote};
+type Job__848768964 =
+  {
+    var description : Text;
+    employerId : UserId__967865204;
+    id : JobId__567733654;
+    var jobType : JobType__229172236;
+    var location : Text;
+    postedAt : Timestamp__838678315;
+    var requiredSkills : Text;
+    var salaryMax : Nat;
+    var salaryMin : Nat;
+    var status : JobStatus__374926235;
+    var title : Text
+  };
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Timestamp__1056154367 = Timestamp__301639476;
+type Timestamp__301639476 = Int;
+type Timestamp__432409533 = Timestamp__301639476;
+type Timestamp__838678315 = Timestamp__301639476;
+type UserId__158757552 = Principal;
+type UserId__423380635 = UserId__158757552;
+type UserId__786370870 = UserId__158757552;
+type UserId__967865204 = UserId__158757552;
+actor {
+  stable ADMIN_PRINCIPAL : Text;
+  stable applications :
+    {
+      var root :
+        Node__46230540<ApplicationId__702901380, Application__678882009>;
+      var size : Nat__490723111
+    };
+  stable employers :
+    {
+      var root : Node__46230540<UserId__158757552, EmployerProfile__716138234>;
+      var size : Nat__490723111
+    };
+  stable jobSeekers :
+    {
+      var root :
+        Node__46230540<UserId__158757552, JobSeekerProfile__356638552>;
+      var size : Nat__490723111
+    };
+  stable jobs :
+    {
+      var root : Node__46230540<JobId__339598917, Job__848768964>;
+      var size : Nat__490723111
+    };
+  stable var nextApplicationId : Nat;
+  stable var nextJobId : Nat
+};

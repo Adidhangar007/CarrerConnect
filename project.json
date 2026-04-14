@@ -1,0 +1,24 @@
+{
+  "overview": "A full-stack Job Portal web app where Job Seekers can browse and apply to jobs, Employers can post jobs and manage applications, and Admins can oversee the platform. Built with Internet Identity authentication, dual user profiles, and a clean professional interface.",
+  "features": [
+    "Internet Identity login with Job Seeker and Employer roles",
+    "Job Seeker profiles with skills, experience, and bio",
+    "Employer company profiles with name, description, and website",
+    "Job posting with title, description, skills, location, salary, and job type",
+    "Browse and search/filter job listings",
+    "Job applications with cover letter",
+    "My Applications tracking page for seekers",
+    "Manage Applications dashboard for employers",
+    "Admin panel to view all users and companies"
+  ],
+  "category": "productivity",
+  "tags": [
+    "job-portal",
+    "hiring",
+    "careers",
+    "employment",
+    "job-search",
+    "recruitment"
+  ],
+  "last_updated": "2026-04-14T13:41:03.934Z"
+}

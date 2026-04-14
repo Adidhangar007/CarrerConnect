@@ -1,0 +1,145 @@
+type UserType = 
+ variant {
+   Employer;
+   JobSeeker;
+ };
+type UserId = principal;
+type UpsertJobSeekerInput = 
+ record {
+   bio: text;
+   email: text;
+   name: text;
+   phone: text;
+   skills: text;
+   yearsOfExperience: nat;
+ };
+type UpsertEmployerInput = 
+ record {
+   companyName: text;
+   description: text;
+   websiteUrl: text;
+ };
+type UpdateJobInput = 
+ record {
+   description: text;
+   id: JobId;
+   jobType: JobType;
+   location: text;
+   requiredSkills: text;
+   salaryMax: nat;
+   salaryMin: nat;
+   title: text;
+ };
+type Timestamp = int;
+type SubmitApplicationInput = 
+ record {
+   coverLetter: text;
+   jobId: JobId;
+ };
+type JobType = 
+ variant {
+   FullTime;
+   PartTime;
+   Remote;
+ };
+type JobStatus = 
+ variant {
+   Closed;
+   Open;
+ };
+type JobSeekerProfilePublic = 
+ record {
+   bio: text;
+   createdAt: Timestamp;
+   email: text;
+   id: UserId;
+   name: text;
+   phone: text;
+   skills: text;
+   yearsOfExperience: nat;
+ };
+type JobPublic = 
+ record {
+   description: text;
+   employerId: UserId;
+   id: JobId;
+   jobType: JobType;
+   location: text;
+   postedAt: Timestamp;
+   requiredSkills: text;
+   salaryMax: nat;
+   salaryMin: nat;
+   status: JobStatus;
+   title: text;
+ };
+type JobId = nat;
+type EmployerProfilePublic = 
+ record {
+   companyName: text;
+   createdAt: Timestamp;
+   description: text;
+   id: UserId;
+   websiteUrl: text;
+ };
+type CreateJobInput = 
+ record {
+   description: text;
+   jobType: JobType;
+   location: text;
+   requiredSkills: text;
+   salaryMax: nat;
+   salaryMin: nat;
+   title: text;
+ };
+type ApplicationStatus = 
+ variant {
+   Accepted;
+   Pending;
+   Rejected;
+   Viewed;
+ };
+type ApplicationPublic = 
+ record {
+   applicantId: UserId;
+   appliedAt: Timestamp;
+   coverLetter: text;
+   id: ApplicationId;
+   jobId: JobId;
+   status: ApplicationStatus;
+ };
+type ApplicationId = nat;
+service : {
+  adminGetStats: () ->
+   (record {
+      totalApplications: nat;
+      totalEmployers: nat;
+      totalJobSeekers: nat;
+      totalJobs: nat;
+    });
+  adminListEmployers: () -> (vec EmployerProfilePublic);
+  adminListJobSeekers: () -> (vec JobSeekerProfilePublic);
+  createJob: (input: CreateJobInput) -> (JobId);
+  deleteJob: (jobId: JobId) -> ();
+  getEmployerProfile: (userId: UserId) -> (opt EmployerProfilePublic) query;
+  getJob: (jobId: JobId) -> (opt JobPublic) query;
+  getJobSeekerProfile: (userId: UserId) -> (opt JobSeekerProfilePublic) query;
+  getMyEmployerProfile: () -> (opt EmployerProfilePublic) query;
+  getMyJobSeekerProfile: () -> (opt JobSeekerProfilePublic) query;
+  getMyUserType: () -> (opt UserType) query;
+  getUserType: (userId: UserId) -> (opt UserType) query;
+  hasApplied: (jobId: JobId) -> (bool) query;
+  listApplicationsForJob: (jobId: JobId) -> (vec ApplicationPublic) query;
+  listApplicationsForMyJobs: () -> (vec ApplicationPublic) query;
+  listMyApplications: () -> (vec ApplicationPublic) query;
+  listMyJobs: () -> (vec JobPublic) query;
+  listOpenJobs: () -> (vec JobPublic) query;
+  setUserType: (userType: UserType) -> ();
+  submitApplication: (input: SubmitApplicationInput) -> (ApplicationId);
+  toggleJobStatus: (jobId: JobId) -> ();
+  updateApplicationStatus: (applicationId: ApplicationId, status:
+   ApplicationStatus) -> ();
+  updateJob: (input: UpdateJobInput) -> ();
+  upsertEmployerProfile: (input: UpsertEmployerInput) -> ();
+  upsertJobSeekerProfile: (input: UpsertJobSeekerInput) -> ();
+  withdrawApplication: (applicationId: ApplicationId) -> ();
+}
